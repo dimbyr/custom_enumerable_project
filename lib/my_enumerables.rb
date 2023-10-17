@@ -47,6 +47,15 @@ module Enumerable
     my_each { |x| mapped << block.call(x)}
     mapped
   end
+
+  def my_inject(initial_value)
+    res = initial_value
+    my_each do |x|
+      res = yield(initial_value, x)
+      initial_value = res
+    end
+    res
+  end
 end
 
 # You will first have to define my_each
@@ -56,7 +65,7 @@ end
 class Array
   # Define my_each here
   def my_each(&block)
-    each {|element| block.call(element)}
+    each { |element| block.call(element)}
   end
   include Enumerable
 end
